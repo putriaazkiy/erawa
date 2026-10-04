@@ -9,6 +9,96 @@ document.addEventListener("DOMContentLoaded", () => {
     let isNavigating = false;
     let navigationTimer = null;
 
+    /*
+     * Section yang "dikunci" sebagai aktif selama scroll hasil klik
+     * navbar berlangsung, supaya tidak berkedip melewati section lain.
+     */
+    let lockedId = null;
+    let lockTimer = null;
+
+
+    /* =========================================================
+       ACTIVE NAVIGATION
+       (menggantikan IntersectionObserver lama)
+
+       Masalah lama: observer hanya "melihat" garis tipis di rentang
+       30%-45% tinggi layar. Section terakhir (Contact) pendek, jadi
+       saat halaman sudah mentok di bawah, bagian atasnya berhenti
+       di ~60% layar dan tidak pernah menyentuh garis itu -> section
+       sebelumnya (Menu) yang tetap dianggap aktif.
+    ========================================================= */
+
+    const setActive = (id) => {
+        links.forEach((link) => {
+            link.classList.toggle(
+                "is-active",
+                link.getAttribute("href") === `#${id}`
+            );
+        });
+    };
+
+    const getCurrentSectionId = () => {
+        if (!sections.length) return null;
+
+        const doc = document.documentElement;
+
+        const atBottom =
+            Math.ceil(window.scrollY + window.innerHeight) >=
+            doc.scrollHeight - 2;
+
+        /*
+         * Sudah mentok di bawah halaman -> section terakhir aktif.
+         */
+        if (atBottom) {
+            return sections[sections.length - 1].id;
+        }
+
+        /*
+         * Selain itu: section terakhir yang bagian atasnya sudah
+         * melewati garis acuan (35% tinggi layar).
+         */
+        const line = window.innerHeight * 0.35;
+
+        let current = sections[0];
+
+        sections.forEach((section) => {
+            if (section.getBoundingClientRect().top <= line) {
+                current = section;
+            }
+        });
+
+        return current.id;
+    };
+
+    const updateActive = () => {
+        if (lockedId) {
+            setActive(lockedId);
+            return;
+        }
+
+        const id = getCurrentSectionId();
+
+        if (id) setActive(id);
+    };
+
+    const releaseLock = () => {
+        lockedId = null;
+        updateActive();
+    };
+
+    const lockActive = (id) => {
+        lockedId = id;
+        setActive(id);
+
+        window.clearTimeout(lockTimer);
+
+        /*
+         * Cadangan: lepas kunci setelah 1,2 detik. Selama scroll
+         * berjalan, timer ini di-reset oleh event scroll (lihat bawah).
+         */
+        lockTimer = window.setTimeout(releaseLock, 1200);
+    };
+
 
     /* =========================================================
        MOBILE MENU
@@ -43,10 +133,30 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     updateNavbar();
+    updateActive();
 
     window.addEventListener(
         "scroll",
-        updateNavbar,
+        () => {
+            updateNavbar();
+
+            if (lockedId) {
+                /*
+                 * Scroll hasil klik navbar masih berjalan. Lepas kunci
+                 * ketika scroll sudah berhenti selama 150ms.
+                 */
+                window.clearTimeout(lockTimer);
+                lockTimer = window.setTimeout(releaseLock, 150);
+            } else {
+                updateActive();
+            }
+        },
+        { passive: true }
+    );
+
+    window.addEventListener(
+        "resize",
+        updateActive,
         { passive: true }
     );
 
@@ -85,6 +195,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!target) return;
 
         event.preventDefault();
+
+        /*
+         * Tandai link yang diklik sebagai aktif sejak awal.
+         */
+        lockActive(target.id);
 
 
         /* -----------------------------------------------------
@@ -135,41 +250,41 @@ document.addEventListener("DOMContentLoaded", () => {
         let finished = false;
 
 
-       const scrollAfterNav = () => {
-    if (finished) return;
+        const scrollAfterNav = () => {
+            if (finished) return;
 
-    finished = true;
+            finished = true;
 
-    nav.removeEventListener(
-        "transitionend",
-        onTransitionEnd
-    );
+            nav.removeEventListener(
+                "transitionend",
+                onTransitionEnd
+            );
 
-    const navBottom =
-        nav.getBoundingClientRect().bottom;
+            const navBottom =
+                nav.getBoundingClientRect().bottom;
 
-    const targetTop =
-        window.scrollY +
-        target.getBoundingClientRect().top;
+            const targetTop =
+                window.scrollY +
+                target.getBoundingClientRect().top;
 
-    const scrollTarget =
-        Math.max(
-            0,
-            targetTop - navBottom + 10
-        );
+            const scrollTarget =
+                Math.max(
+                    0,
+                    targetTop - navBottom + 10
+                );
 
-    window.scrollTo({
-        top: scrollTarget,
-        behavior: "smooth"
-    });
+            window.scrollTo({
+                top: scrollTarget,
+                behavior: "smooth"
+            });
 
-    window.clearTimeout(navigationTimer);
+            window.clearTimeout(navigationTimer);
 
-    navigationTimer = window.setTimeout(() => {
-        isNavigating = false;
-        updateNavbar();
-    }, 600);
-};
+            navigationTimer = window.setTimeout(() => {
+                isNavigating = false;
+                updateNavbar();
+            }, 600);
+        };
 
         const onTransitionEnd = (event) => {
             /*
@@ -249,58 +364,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 "nav-open",
                 nextState
             );
-        });
-    }
-
-
-    /* =========================================================
-       ACTIVE NAVIGATION
-    ========================================================= */
-
-    if (sections.length && links.length) {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visibleSections = entries
-                    .filter(
-                        (entry) =>
-                            entry.isIntersecting
-                    )
-                    .sort(
-                        (a, b) =>
-                            b.intersectionRatio -
-                            a.intersectionRatio
-                    );
-
-                const visible =
-                    visibleSections[0];
-
-                if (!visible) return;
-
-                const id =
-                    `#${visible.target.id}`;
-
-                links.forEach((link) => {
-                    link.classList.toggle(
-                        "is-active",
-                        link.getAttribute("href") === id
-                    );
-                });
-            },
-            {
-                rootMargin:
-                    "-30% 0px -55% 0px",
-
-                threshold: [
-                    0,
-                    0.1,
-                    0.25,
-                    0.5
-                ]
-            }
-        );
-
-        sections.forEach((section) => {
-            observer.observe(section);
         });
     }
 

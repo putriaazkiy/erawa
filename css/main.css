@@ -157,6 +157,20 @@ address {
     letter-spacing: .26em;
 }
 
+.strip__track {
+    animation: marquee 18s linear infinite;
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
 .strip__track i {
     width: 6px;
     height: 6px;
@@ -664,6 +678,17 @@ address {
         var(--cream);
 }
 
+.product {
+    transition:
+        transform .35s ease,
+        filter .35s ease;
+}
+
+.product:hover {
+    transform: translateY(-10px) scale(1.04);
+    filter: drop-shadow(0 12px 15px rgba(0, 0, 0, .12));
+}
+
 .best__band {
     width: 100%;
 
@@ -835,7 +860,7 @@ address {
 .strip--menu-bottom {
     width: 100%;
     height: 135px;
-    margin-top: -75px;
+    margin-top: -65px;
 }
 
 .strip--menu .strip__track {
@@ -872,7 +897,7 @@ address {
 .strip--menu .strip__track b {
     font-family: var(--body);
 
-    font-size: .32em;
+    font-size: .50em;
     line-height: 1;
 }
 
@@ -1039,7 +1064,7 @@ address {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 15px;
 
     width: 100%;
@@ -1310,154 +1335,16 @@ address {
    MOBILE
    ========================================================= */
 
-@media (max-width: 767px) {
-
-    .home {
-        min-height: 100svh;
-        height: 100svh;
-        padding-top: var(--header-h);
-    }
-
-    .home__stage {
-        height:
-            calc(
-                100svh - var(--header-h)
-            );
-    }
-
-    .hero__art {
-        width: min(78vw, 390px);
-    }
-
-    .hero__headline {
-        width: min(80vw, 420px);
-    }
-
-    .burst {
-        width: 45vw;
-    }
-
-    .burst--left {
-        left: -30px;
-    }
-
-    .burst--right {
-        right: -30px;
-    }
-
-    .rule {
-        right: 20px;
-        bottom: 20px;
-        left: 20px;
-
-        gap: 15px;
-
-        font-size: 9px;
-    }
-}
-
-
-/* =========================================================
-   MENU MOBILE
-   ========================================================= */
-
-@media (max-width: 700px) {
-
-    .menu {
-        padding-top: var(--header-h);
-        padding-bottom: 100px;
-    }
-
-    .menu__title {
-        justify-content: flex-start;
-
-        gap: 45px;
-
-        padding:
-            20px
-            0
-            35px;
-
-        font-size: 42px;
-    }
-
-    .menu-card {
-        width: calc(100% - 30px);
-        min-height: 720px;
-    }
-
-    .menu-card__content {
-        grid-template-columns: 1fr;
-
-        gap: 40px;
-
-        padding:
-            55px
-            45px
-            65px;
-    }
-
-    .menu-col--food {
-        gap: 35px;
-    }
-
-    .menu-group {
-        min-height: 105px;
-        padding-right: 75px;
-    }
-
-    .menu-col--drinks .menu-group {
-        min-height: auto;
-        padding-right: 85px;
-    }
-
-    .menu-group h3 {
-        font-size: 15px;
-    }
-
-    .price-list {
-        font-size: 11px;
-        gap: 7px;
-    }
-
-    .menu-group__img--original {
-        width: 75px;
-    }
-
-    .menu-group__img--keju {
-        width: 72px;
-    }
-
-    .menu-group__img--mix {
-        width: 65px;
-    }
-
-    .menu-group__img--cup {
-        width: 55px;
-    }
-
-    .menu-group__img--matcha {
-        width: 65px;
-    }
-
-    .menu .rule {
-        right: 30px;
-        left: 30px;
-        bottom: 35px;
-    }
-}
-
-
-/* =========================================================
-   MOBILE HEADER / NAV
-   ========================================================= */
-
 @media (max-width: 680px) {
 
     :root {
         --header-h: 58px;
         --page-pad: 6%;
     }
+
+    /* =========================
+       HEADER
+       ========================= */
 
     .site-header {
         height: var(--header-h);
@@ -1472,66 +1359,50 @@ address {
         font-size: 7px;
     }
 
-    /*
-     * Floating navbar tetap menggunakan sistem
-     * floating yang sudah ditetapkan.
-     */
+
+    /* =========================
+       NAVBAR
+       ========================= */
 
     .nav {
         position: fixed;
-
         top: 48px;
         left: 50%;
-
         width: calc(100% - 20px);
         height: 56px;
-
-        justify-content: space-between;
-
         padding: 0 6%;
-
         transform: translateX(-50%);
     }
 
-    /*
-     * Navbar panjang tetap menempel pada
-     * bagian bawah strip hitam.
-     */
-
     .nav.navShadow {
         position: fixed;
-
         top: 22px;
         left: 50%;
-
         width: 100%;
         height: 56px;
-
         padding: 0;
-
         border-radius: 0;
-
         transform: translateX(-50%);
     }
 
     .nav__mobile-brand {
         display: grid;
-
         width: 40px;
         height: 32px;
-
         place-items: center;
+    }
+
+    .nav__mobile-brand .logo-e {
+        width: 24px;
     }
 
     .nav__list {
         position: absolute;
-
         top: calc(100% + 1px);
         right: 0;
         left: 0;
 
         display: flex;
-
         flex-direction: column;
         align-items: stretch;
 
@@ -1563,7 +1434,6 @@ address {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
-
         transform: translateY(0);
     }
 
@@ -1573,11 +1443,8 @@ address {
 
     .nav__link {
         width: 100%;
-
         justify-content: center;
-
         min-height: 42px;
-
         font-size: 12px;
     }
 
@@ -1587,31 +1454,21 @@ address {
 
     .nav__toggle {
         display: grid;
-
         width: 38px;
         height: 32px;
-
         padding: 6px;
-
         place-content: center;
-
         gap: 4px;
-
         border: 0;
-
         background: transparent;
-
         cursor: pointer;
     }
 
     .nav__toggle span {
         display: block;
-
         width: 22px;
         height: 2px;
-
         border-radius: 2px;
-
         background: var(--maroon);
 
         transition:
@@ -1635,27 +1492,19 @@ address {
             rotate(-45deg);
     }
 
+
+    /* =========================
+       HOME
+       ========================= */
+
     .home {
         min-height: 720px;
+        height: 720px;
     }
 
     .home__stage {
-        min-height:
-            calc(
-                720px - var(--header-h)
-            );
-    }
-
-    .burst {
-        width: 52vw;
-    }
-
-    .burst--left {
-        left: -15px;
-    }
-
-    .burst--right {
-        right: -15px;
+        height: calc(720px - var(--header-h));
+        min-height: 0;
     }
 
     .hero__art {
@@ -1687,15 +1536,30 @@ address {
         font-size: clamp(48px, 13vw, 65px);
     }
 
+    .burst {
+        width: 52vw;
+    }
+
+    .burst--left {
+        left: -15px;
+    }
+
+    .burst--right {
+        right: -15px;
+    }
+
     .rule {
         right: 25px;
         bottom: 30px;
         left: 25px;
-
         gap: 18px;
-
         font-size: 10px;
     }
+
+
+    /* =========================
+       BEST SELLER
+       ========================= */
 
     .best {
         min-height: 780px;
@@ -1705,16 +1569,9 @@ address {
         height: 70px;
     }
 
-    .best__band h2 {
-        font-size: 46px;
-    }
-
-    .best__band::before {
-        left: 12%;
-    }
-
-    .best__band::after {
-        right: 12%;
+    .best__band img {
+        height: 70px;
+        object-fit: cover;
     }
 
     .best__stage {
@@ -1744,8 +1601,20 @@ address {
         font-size: 7px;
     }
 
+    .product:hover {
+        transform: none;
+        filter: none;
+    }
+
+
+    /* =========================
+       MENU
+       ========================= */
+
     .menu {
         min-height: 760px;
+        padding-top: 0;
+        padding-bottom: 100px;
     }
 
     .strip--menu {
@@ -1767,42 +1636,24 @@ address {
     .menu-card {
         width: 88vw;
         min-height: 510px;
+        transform: none;
     }
 
-    .menu-card__content {
-        grid-template-columns: 1fr;
-
-        gap: 30px;
-
-        padding:
-            48px
-            12%
-            44px;
+    .menu-card__image {
+        width: 88%;
     }
 
-    .menu-col--food {
-        gap: 26px;
-    }
 
-    .menu-group {
-        padding-right: 100px;
-    }
-
-    .menu-col--drinks .menu-group {
-        padding-right: 105px;
-    }
-
-    .price-list {
-        font-size: 10px;
-    }
+    /* =========================
+       CONTACT
+       ========================= */
 
     .contact {
-        min-height: 330px;
+        min-height: auto;
     }
 
     .contact__inner {
         grid-template-columns: 1fr;
-
         gap: 28px;
 
         padding:
@@ -1812,9 +1663,27 @@ address {
     }
 
     .contact__actions {
-        width: min(100%, 172px);
+        width: 100%;
         justify-self: start;
     }
+
+    .btn-group {
+        justify-content: flex-start;
+    }
+
+    .contact__map {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .contact__map iframe {
+        height: 180px;
+    }
+
+
+    /* =========================
+       FOOTER
+       ========================= */
 
     .site-footer .strip--light {
         height: 26px;
@@ -2060,5 +1929,615 @@ address {
     *::before,
     *::after {
         transition-duration: .01ms !important;
+    }
+}
+
+/* =========================================================
+   IPHONE 14 PRO MAX / PLUS / 15 PRO MAX (lebar ~428-430px)
+   Hanya aktif di layar 421px - 480px, jadi desktop, tablet,
+   dan HP kecil (<=420px) TIDAK terpengaruh.
+   Letakkan blok ini di paling bawah file agar menimpa aturan lama.
+   ========================================================= */
+
+@media (min-width: 421px) and (max-width: 480px) {
+
+    html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
+
+    /* ---------- HOME: penuhi tinggi layar & rapikan komposisi ---------- */
+
+    /* Tinggi home dibatasi 640-700px. Memakai 100svh mentah membuat
+       garis "Tahu Bakso dan Kopi" di bagian bawah tertutup toolbar. */
+    .home {
+        height: clamp(640px, 100svh, 700px);
+        min-height: 640px;
+    }
+
+    .home__stage {
+        height: calc(clamp(640px, 100svh, 700px) - var(--header-h));
+        min-height: 0;
+    }
+
+    /* Foto makanan & tulisan sama-sama di tengah stage (sebelumnya
+       foto di top:245px sedangkan tulisan di 50%, jadi tidak sejajar) */
+    /* Foto piring di-scale 1.7x oleh aturan dasar (80% x 1.7 = 136% lebar art).
+       Lebar art harus <= ~66vw supaya piring tidak terpotong di sisi layar. */
+    .hero__art {
+        top: 50%;
+        width: 66vw;
+    }
+
+    .hero__headline {
+        width: 88vw;
+    }
+
+    .burst {
+        width: 50vw;
+    }
+
+    .rule {
+        right: 24px;
+        left: 24px;
+        bottom: 32px;
+        font-size: 11px;
+    }
+
+    /* ---------- BEST SELLER: teks terlalu kecil (7px) ---------- */
+
+    .products {
+        column-gap: 14px;
+    }
+
+    .product__media {
+        height: 165px;
+    }
+
+    .product h3 {
+        font-size: 11px;
+    }
+
+    .product p {
+        font-size: 9px;
+        line-height: 1.4;
+    }
+
+    /* ---------- CONTACT: teks 8px terlalu kecil ---------- */
+
+    .contact__info {
+        font-size: 13px;
+    }
+
+    .contact__inner {
+        padding-right: 7%;
+        padding-left: 7%;
+    }
+
+    .contact__map {
+        max-width: 100%;
+    }
+
+    .contact__map iframe {
+        height: 200px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE NAV DROPDOWN FIX (<=680px)
+   Penyebab: .nav__list mewarisi height:100% (=56px tinggi nav)
+   dari aturan desktop, sehingga background hanya menutupi 1 item.
+   ========================================================= */
+
+@media (max-width: 680px) {
+
+    .nav__list {
+        height: auto;
+        width: auto;
+        margin: 0;
+
+        top: calc(100% + 8px);
+
+        border-radius: 24px;
+    }
+
+    /* saat navbar sudah full-width setelah scroll */
+    .nav.navShadow .nav__list {
+        top: 100%;
+        border-radius: 0 0 24px 24px;
+    }
+}
+
+
+/* =========================================================
+   IPHONE 14 PRO MAX - ANTI KEPOTONG (home / best seller / menu)
+   ========================================================= */
+
+@media (min-width: 421px) and (max-width: 480px) {
+
+    /* Marquee (strip) sangat lebar; tanpa overflow:hidden ia bisa
+       melebarkan layout di iOS sehingga semua section terlihat bergeser */
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .strip {
+        overflow: hidden;
+    }
+
+    /* ---------- BEST SELLER ---------- */
+
+    .best__stage {
+        padding-right: 5%;
+        padding-left: 5%;
+    }
+
+    .products {
+        column-gap: 12px;
+    }
+
+    .product h3,
+    .product p {
+        overflow-wrap: anywhere;
+    }
+
+    /* ---------- MENU ----------
+       Strip bawah memakai margin-top:-65px sehingga menimpa bagian
+       bawah gambar menu di mobile (transform kartu sudah dimatikan).
+       Tinggi paksa (min-height) juga bikin ruang kosong. */
+
+    .menu {
+        min-height: 0;
+        padding-bottom: 0;
+    }
+
+    .menu__stage {
+        min-height: 0;
+        padding-bottom: 0;
+    }
+
+    .menu-card {
+        width: 100%;
+        min-height: 0;
+    }
+
+    .menu-card__image {
+        width: 100%;
+    }
+
+    .strip--menu-bottom {
+        margin-top: 20px;
+    }
+}
+
+
+/* =========================================================
+   IPHONE 14 PRO MAX - RAPATKAN BEST SELLER & BESARKAN MENU
+   ========================================================= */
+
+@media (min-width: 421px) and (max-width: 480px) {
+
+    /* Best Seller: jarak vertikal terlalu longgar, sehingga baris
+       ke-2 dan tulisan "People choices" terdorong keluar layar */
+    .best {
+        min-height: 0;
+    }
+
+    .best__stage {
+        padding-top: 24px;
+        padding-bottom: 80px;
+    }
+
+    .products {
+        row-gap: 6px;
+    }
+
+    .product__media {
+        height: 150px;
+        margin-bottom: 4px;
+    }
+
+    .product p {
+        margin-bottom: 14px;
+    }
+
+    /* Menu: gambar menu lebih lebar & rapat ke tengah */
+    .menu__stage {
+        padding-right: 3%;
+        padding-left: 3%;
+    }
+
+    .menu-card {
+        margin-top: 8px;
+    }
+}
+
+
+/* =========================================================
+   DESKTOP / TABLET (>=681px): rapatkan jarak Best Seller -> Menu
+   - tinggi section mengikuti isi (tanpa min-height paksa)
+   - jarak bawah garis "People choices" diperkecil
+   ========================================================= */
+
+@media (min-width: 681px) {
+
+    .best {
+        min-height: 0;
+    }
+
+    .best__stage {
+        padding-bottom: clamp(32px, 3vw, 56px);
+    }
+
+    /* garis "People choices" dinaikkan agar tidak terpotong di tepi layar */
+    .best .rule {
+        bottom: clamp(16px, 1.6vw, 30px);
+    }
+}
+
+
+
+/* =========================================================
+   RUNNING TEXT (MARQUEE) - LOOP MULUS TANPA "CUT"
+   Struktur: .strip__track > 2 x .strip__group (isi identik).
+   Setiap grup minimal selebar layar, track = 2 grup persis,
+   animasi menggeser tepat -50% (= 1 grup) -> ujungnya menyambung
+   sempurna di semua lebar layar. Tidak ada gap/padding di track
+   yang membuat loop meleset.
+   ========================================================= */
+
+.strip {
+    /* jarak dibatasi agar isi 1 grup selalu <= lebar layar */
+    --strip-gap: min(clamp(30px, 7vw, 120px), calc((100vw - 340px) / 12));
+    --strip-dur: 28s;
+
+    overflow: hidden;
+}
+
+.strip--menu {
+    --strip-gap: min(clamp(20px, 3vw, 56px), calc((100vw - 420px) / 12));
+    --strip-dur: 32s;
+
+    /* ukuran tulisan MENU diperkecil */
+    --menu-fs: clamp(20px, 2.2vw, 34px);
+}
+
+.strip .strip__track {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: max-content;
+    min-width: 0;
+    height: 100%;
+
+    gap: 0;
+    padding: 0;
+
+    animation: strip-loop var(--strip-dur) linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+.strip__group {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    min-width: 100vw;
+    height: 100%;
+
+    gap: var(--strip-gap);
+}
+
+.strip__group > * {
+    flex: 0 0 auto;
+}
+
+/* ukuran MENU (menimpa nilai lama 50px desktop / 54px mobile) */
+.strip.strip--menu .strip__track {
+    font-size: var(--menu-fs);
+}
+
+@keyframes strip-loop {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+@media (max-width: 680px) {
+
+    .strip {
+        --strip-gap: min(26px, calc((100vw - 200px) / 8));
+    }
+
+    .strip--menu {
+        --strip-gap: min(20px, calc((100vw - 300px) / 6));
+        --menu-fs: 24px;
+    }
+
+    /* Di HP, isi tiap grup dibuat muat dalam 1 layar supaya lebar grup
+       tepat 100vw (bilangan bulat) -> loop benar-benar tanpa lompatan */
+    .strip:not(.strip--menu) .strip__group > :nth-child(n + 9) {
+        display: none;
+    }
+
+    .strip--menu .strip__group > :nth-child(n + 7) {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .strip .strip__track {
+        animation: none;
+    }
+}
+
+
+/* =========================================================
+   MENU: TULISAN STATIS (TIDAK RUNNING TEXT)
+   ========================================================= */
+
+.strip--menu .strip__track {
+    width: 100%;
+    animation: none;
+    transform: none;
+    will-change: auto;
+}
+
+.strip--menu .strip__group {
+    min-width: 0;
+    width: 100%;
+}
+
+/* grup kedua hanya dipakai untuk loop, tidak perlu saat statis */
+.strip--menu .strip__group:nth-child(2) {
+    display: none;
+}
+
+
+/* =========================================================
+   BURST KIRI & KANAN: UKURAN DIPERKECIL
+   Atur lewat --burst-w / --burst-offset
+   ========================================================= */
+
+.burst {
+    --burst-w: clamp(180px, 20vw, 385px);
+    --burst-offset: -56px;
+
+    width: var(--burst-w);
+}
+
+.burst--left {
+    left: var(--burst-offset);
+}
+
+.burst--right {
+    right: var(--burst-offset);
+}
+
+/* tablet */
+@media (min-width: 681px) and (max-width: 1199px) {
+    .burst {
+        --burst-w: 26vw;
+        --burst-offset: -40px;
+    }
+}
+
+/* mobile */
+@media (max-width: 680px) {
+    .burst {
+        --burst-w: 38vw;
+        --burst-offset: -10px;
+    }
+}
+
+
+/* =========================================================
+   MENU (>=901px): SECTION MUAT DALAM 1 LAYAR
+   Tinggi section = tinggi layar - header. Strip atas, gambar menu,
+   dan strip bawah dibagi otomatis; gambar menyesuaikan sisa tinggi.
+   ========================================================= */
+
+@media (min-width: 901px) {
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+
+        height: calc(100svh - var(--header-h));
+        min-height: 440px;
+
+        padding: 0;
+    }
+
+    .menu .strip--menu {
+        flex: 0 0 auto;
+        height: clamp(64px, 9svh, 96px);
+        margin: 0;
+    }
+
+    .menu__stage {
+        flex: 1 1 auto;
+
+        display: flex;
+        flex-direction: column;
+
+        min-height: 0;
+        padding: 0;
+    }
+
+    .menu-card {
+        flex: 1 1 auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 0;
+        width: 100%;
+        max-width: none;
+
+        margin: 0;
+        padding: 8px var(--page-pad);
+
+        transform: none;
+    }
+
+    .menu-card__image {
+        width: auto;
+        height: auto;
+        min-height: 0;
+
+        max-width: min(62vw, 1200px);
+        max-height: 100%;
+
+        margin: 0;
+
+        object-fit: contain;
+    }
+}
+
+
+/* =========================================================
+   CONTACT: tombol rata kiri dengan teks alamat di atasnya
+   Sebelumnya tiap tombol berupa kotak tetap (45px) dengan ikon
+   di tengah, sehingga ikon pertama menjorok ke kanan dari teks.
+   Sekarang kotak mengikuti ukuran ikon dan mulai tepat di tepi
+   kiri teks. Jika artwork ikon punya ruang transparan di sisi
+   kirinya, geser dengan --btn-nudge (mis. -6px).
+   ========================================================= */
+
+.contact__info {
+    column-gap: 14px;
+}
+
+.contact__info .btn {
+    --btn-nudge: 0px;
+
+    flex: 0 0 auto;
+
+    width: auto;
+    height: auto;
+    min-height: 0;
+
+    margin: 0 0 0 var(--btn-nudge);
+    padding: 0;
+
+    gap: 0;
+
+    justify-content: flex-start;
+}
+
+.contact__info .btn img {
+    display: block;
+
+    width: auto;
+    height: 22.5px;   /* setengah dari 45px */
+    max-width: none;
+}
+
+/* hanya tombol pertama yang perlu rata dengan tepi teks */
+.contact__info .btn:not(:first-of-type) {
+    margin-left: 0;
+}
+/* iPhone 14 Pro Max and similarly sized phones */
+@media (min-width: 390px) and (max-width: 430px) {
+    :root {
+        --header-h: 56px;
+        --page-pad: 20px;
+    }
+
+    .nav {
+        top: 37px;
+        width: calc(100% - 32px);
+        height: 48px;
+    }
+
+    .nav.navShadow {
+        top: 25px;
+        height: 56px;
+    }
+
+    .home {
+        height: 100svh;
+        min-height: 640px;
+    }
+
+    .home__stage {
+        height: calc(100svh - var(--header-h));
+        min-height: 584px;
+    }
+
+    .hero__art {
+        width: min(88vw, 390px);
+        top: 47%;
+    }
+
+    .hero__headline {
+        width: min(88vw, 390px);
+        max-width: 88vw;
+    }
+
+    .best__stage {
+        padding: 24px 18px 76px;
+    }
+
+    .products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 12px;
+        row-gap: 20px;
+    }
+
+    .product__media {
+        height: clamp(125px, 36vw, 155px);
+    }
+
+    .product h3 {
+        font-size: clamp(12px, 3.5vw, 15px);
+        line-height: 1.3;
+    }
+
+    .product p {
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    .menu__stage {
+        padding-right: 14px;
+        padding-left: 14px;
+    }
+
+    .menu-card__image {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .contact__inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+        padding: 36px 22px;
+    }
+
+    .contact__map,
+    .contact__map iframe {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .contact__map iframe {
+        height: 240px;
     }
 }
