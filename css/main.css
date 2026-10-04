@@ -327,27 +327,17 @@ address {
 
 .nav__logo {
     display: grid;
-
     width: 44px;
     height: 34px;
-
     place-items: center;
-
     text-decoration: none;
 }
 
 .logo-e {
-    color: var(--maroon);
-
-    font-family: var(--mono);
-    font-size: 30px;
-    font-weight: 800;
-
-    line-height: 1;
-
-    transform: scaleX(.78);
+    width: 20px;
+    height: auto;
+    display: block;
 }
-
 
 /* =========================================================
    MOBILE BRAND / TOGGLE
