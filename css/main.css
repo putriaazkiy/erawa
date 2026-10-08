@@ -2541,3 +2541,122 @@ address {
         height: 240px;
     }
 }
+
+
+/* =========================================================
+   MENU DI HP (gambar TIDAK diputar)
+   - HP landscape: gambar tampil normal dan lebar.
+   (Aturan HP portrait ada di blok "MENU HP portrait" paling bawah.)
+   ========================================================= */
+
+/* ---------- HP landscape: gambar normal & lebar ---------- */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 1000px) {
+
+    .menu {
+        display: block;
+
+        height: auto;
+        min-height: 0;
+
+        padding: 0;
+    }
+
+    .menu .strip--menu {
+        height: 44px;
+        margin: 0;
+    }
+
+    .menu__stage {
+        display: block;
+
+        min-height: 0;
+        padding: 0 3%;
+    }
+
+    .menu-card {
+        display: flex;
+        justify-content: center;
+
+        width: 100%;
+        max-width: none;
+        height: auto;
+        min-height: 0;
+
+        margin: 0;
+        padding: 8px 0;
+
+        transform: none;
+    }
+
+    .menu-card__image {
+        width: min(88vw, 900px);
+        height: auto;
+        max-width: none;
+        max-height: none;
+
+        margin: 0;
+    }
+}
+
+
+/* =========================================================
+   MENU HP (portrait) - gambar normal, TANPA rotasi, TANPA gap
+   - gambar selebar layar, tinggi mengikuti rasio aslinya
+   - tinggi kartu = tinggi gambar (tidak ada ruang kosong)
+   - sisa padding/min-height mobile lama dibuang
+   Blok ini harus paling akhir. Kalau di file lamamu masih ada blok
+   "MENU MOBILE - PERKECIL GAMBAR" (translate + scale 1.5), hapus.
+   Mau gambar lebih kecil? ubah width pada .menu-card__image
+   (mis. 75% lebih kecil, 95% lebih besar).
+   ========================================================= */
+
+@media (max-width: 680px) and (orientation: portrait) {
+
+    .menu {
+        min-height: 0;
+        padding: 0;
+    }
+
+    .menu__stage {
+        min-height: 0;
+        padding: 0 12px;
+    }
+
+    .menu .strip--menu {
+        height: 60px;
+    }
+
+    /* strip bawah tidak lagi menimpa gambar (-65px) */
+    .menu .strip--menu-bottom {
+        margin-top: 0;
+    }
+
+    .menu-card {
+        display: block;
+
+        width: 100%;
+        max-width: none;
+        height: auto;
+        min-height: 0;
+
+        margin: 8px 0;
+        padding: 0;
+
+        transform: none;
+    }
+
+    .menu-card__image {
+        position: static;
+
+        display: block;
+
+        width: 85%;          /* ubah angka ini untuk besar/kecilnya gambar */
+        max-width: 100%;
+        height: auto;
+        max-height: none;
+
+        margin: 0 auto;
+
+        transform: none;
+    }
+}
